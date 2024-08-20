@@ -186,6 +186,7 @@ span {
   margin: 0 auto;
   box-shadow: 1px 1px 5px rgb(193, 193, 193);
   border-radius: 20px;
+  padding-bottom: 40px;
 }
 
 .search-container {

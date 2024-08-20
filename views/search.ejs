@@ -162,7 +162,9 @@
           </div>
         </div>
       </div>
-      <%})%> <%}%>
+      <%})%> <%} else if (locals.error) { %>
+      <h2 class="results-title"><%=error%></h2>
+      <%}%>
     </div>
   </div>
 </section>
