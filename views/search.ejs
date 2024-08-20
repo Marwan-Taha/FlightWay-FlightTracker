@@ -1,0 +1,170 @@
+<%-include("partials/header.ejs")%>
+<section class="search-section" id="Search">
+  <div>
+    <div class="search-container">
+      <img class="search-img" src="/images/trip.gif" alt="plane gif" />
+      <div class="main-search">
+        <h2 class="search-title">Flight Status</h2>
+        <div class="search-by-container">
+          <a class="search-by-number selected">Flight number</a>
+          <a class="search-by-cities">Cities</a>
+        </div>
+        <form class="form form-by-number visible" method="post">
+          <div class="form-container">
+            <label for="flightNumber">Flight Number (required)</label>
+            <div class="iata-input">
+              <input
+                type="text"
+                name="flight_iata"
+                id="flightIATA"
+                placeholder="Example: MU2557"
+                required
+              />
+              <input type="submit" value="Search" formaction="/get-flight" />
+            </div>
+          </div>
+        </form>
+
+        <form class="form form-by-iata" method="post">
+          <div class="form-container">
+            <label for="flightRoute">Find Flight by Route</label>
+            <div class="dep-arr-input">
+              <div>
+                <input
+                  type="text"
+                  name="dep_iata"
+                  id="depIATA"
+                  placeholder="Enter departure airport's IATA: Example CAI"
+                />
+                <img class="route-img" src="/images/flight.png" alt="" />
+                <input
+                  type="text"
+                  name="arr_iata"
+                  id="arrIATA"
+                  placeholder="Enter arrival airport's IATA: Example CAI"
+                />
+              </div>
+              <input type="submit" value="Search" formaction="/get-flight" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="grid-main-container">
+      <% if (locals.results) { %>
+      <h2 class="results-title">Flights</h2>
+      <%results.forEach((result) => {%>
+      <div class="grid-results-container">
+        <div class="grid-header">
+          <div>
+            <h3><%=result.flight.flight_iata%></h3>
+            <h4><%=result.airline.name%></h4>
+          </div>
+          <div class="header-mid">
+            <h3><%=result.departure.iata%></h3>
+
+            <img class="route-img" src="/images/flight.png" alt="" />
+            <h3><%=result.arrival.iata%></h3>
+          </div>
+          <h3>
+            <span class="result-flight-status"
+              ><%=result.flight_status.toUpperCase()%></span
+            >
+          </h3>
+        </div>
+
+        <div class="grid-details-container">
+          <div class="airport-data">
+            <p class="airport-name">
+              <span><%=result.departure.airport %></span>
+            </p>
+          </div>
+          <div class="departure-time">
+            <p>Flight <span>Departure</span> Times</p>
+            <p><span><%=result.flight_date%></span></p>
+          </div>
+
+          <div class="scheduled-actual">
+            <div>
+              <h4>Scheduled</h4>
+              <p><span><%=result.departure.scheduled.slice(11,16)%></span></p>
+            </div>
+            <div>
+              <h4>actual</h4>
+              <p><span><%=result.departure.estimated.slice(11,16)%></span></p>
+            </div>
+          </div>
+
+          <div class="terminal-data">
+            <div class="terminal">
+              <p><span>Terminal</span></p>
+              <h3>
+                <%if(result.departure.terminal !== null) {%>
+                <%=result.departure.terminal%> <%} else {%>
+                <h3>N/A</h3>
+                <%}%>
+              </h3>
+            </div>
+            <div class="gate">
+              <p><span>Gate</span></p>
+              <h3>
+                <%if(result.departure.gate !== null) {%>
+                <%=result.departure.gate%> <%} else {%>
+                <h3><span>N/A</span></h3>
+                <%}%>
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-details-container">
+          <div class="airport-data">
+            <p class="airport-name"><span><%=result.arrival.airport%></span></p>
+          </div>
+          <div class="departure-time">
+            <p>Flight <span>arrival</span> Times</p>
+            <p><span><%=result.arrival.scheduled.slice(0,10)%></span></p>
+          </div>
+
+          <div class="scheduled-actual">
+            <div>
+              <h4>Scheduled</h4>
+              <p><span><%=result.arrival.scheduled.slice(11,16)%></span></p>
+            </div>
+            <div>
+              <h4>actual</h4>
+              <p><span><%=result.arrival.estimated.slice(11,16)%></span></p>
+            </div>
+          </div>
+
+          <div class="arr-terminal-data">
+            <div class="terminal">
+              <p><span>Terminal</span></p>
+              <h3>
+                <%if(result.arrival.terminal !== null) {%>
+                <%=result.arrival.terminal%> <%} else {%> N/A <%}%>
+              </h3>
+            </div>
+            <div class="gate">
+              <p><span>Gate</span></p>
+              <h3>
+                <%if(result.arrival.gate !== null) {%> <%=result.arrival.gate%>
+                <%} else {%> N/A <%}%>
+              </h3>
+            </div>
+            <div class="baggage">
+              <p><span>Baggage</span></p>
+              <h3>
+                <%if(result.arrival.baggage !== null) {%>
+                <%=result.arrival.baggage%> <%} else {%> N/A <%}%>
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <%})%> <%}%>
+    </div>
+  </div>
+</section>
+
+<%-include("partials/footer.ejs")%>
