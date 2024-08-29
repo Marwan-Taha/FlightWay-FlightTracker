@@ -1,6 +1,6 @@
 # FlightWay - Real-Time Flight Tracking Web App
 
-Welcome to FlightWay, a sleek and modern web application that allows users to track flights in real-time. Built with Node.js, Express, and modern web technologies, SkyTrack offers a seamless experience for users to monitor global air traffic.
+Welcome to FlightWay, a sleek and modern web application that allows users to track flights in real-time. Built with Node.js, Express, and modern web technologies, FlightWay offers a seamless experience for users to monitor global air traffic.
 
 ## Features
 
